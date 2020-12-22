@@ -6,11 +6,11 @@ router.post("/signup", (req, res) => {
   const { email, password, name, lastname } = req.body;
   const dataUser = { email, password, name, lastname };
 
-  connection.query("INSERT INTO users SET ?", [dataUser], (err, results) => {
+  connection.query("INSERT INTO users SET ?", [dataUser], (err, result) => {
     if (err) {
-      res.sendStatus(500);
+      res.status(500).json({ flash: err.message });
     } else {
-      res.send("I am in POST signup");
+      res.status(200).json({ flash: "User has been signed up !" });
     }
   });
 });

@@ -1,76 +1,66 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
-class SignUp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      passwordBis: "",
-      name: "",
-      lastname: "",
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const SignUp = () => {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+    passwordBis: "",
+    name: "",
+    lastname: "",
+  });
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  const { email, password, passwordBis, name, lastname } = userData;
+
+  const [flash, setFlash] = useState("");
+
+  const handleChange = (e) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
-    this.setState({
-      email: "",
-      password: "",
-      passwordBis: "",
-      name: "",
-      lastname: "",
-    });
+    axios
+      .post("/auth/signup", userData)
+      .then((response) => response.data)
+      .then((res) => setFlash(res.flash))
+      .catch(() => setFlash("This email already exists"));
   };
 
-  render() {
-    const { email, password, passwordBis, name, lastname } = this.state;
-    return (
-      <div>
-        <h1>{JSON.stringify(this.state, 1, 1)}</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type='email'
-            name='email'
-            value={email}
-            onChange={this.handleChange}
-          />{" "}
-          <input
-            type='password'
-            name='password'
-            value={password}
-            onChange={this.handleChange}
-          />{" "}
-          <input
-            type='password'
-            name='passwordBis'
-            value={passwordBis}
-            onChange={this.handleChange}
-          />{" "}
-          <input
-            type='name'
-            name='name'
-            value={name}
-            onChange={this.handleChange}
-          />{" "}
-          <input
-            type='lastname'
-            name='lastname'
-            value={lastname}
-            onChange={this.handleChange}
-          />{" "}
-          <input type='submit' value='Submit' />
-        </form>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <h1>{JSON.stringify(userData, 1, 1)}</h1>
+      <p>{flash !== undefined && flash}</p>
+      <form onSubmit={handleSubmit}>
+        <input
+          type='email'
+          name='email'
+          value={email}
+          onChange={handleChange}
+        />{" "}
+        <input
+          type='password'
+          name='password'
+          value={password}
+          onChange={handleChange}
+        />{" "}
+        <input
+          type='password'
+          name='passwordBis'
+          value={passwordBis}
+          onChange={handleChange}
+        />{" "}
+        <input type='name' name='name' value={name} onChange={handleChange} />{" "}
+        <input
+          type='lastname'
+          name='lastname'
+          value={lastname}
+          onChange={handleChange}
+        />{" "}
+        <input type='submit' value='Submit' />
+      </form>
+    </div>
+  );
+};
 
 export default SignUp;
