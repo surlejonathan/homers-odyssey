@@ -24,3 +24,16 @@ body {
   min-height: 100%;
   background-color: #fcb571;
 }
+
+.avatar {
+  border-radius: 100%;
+  width: 200px;
+  height: 200px;
+  object-position: top;
+  object-fit: cover;
+  border: 1px solid black;
+}
+
+a {
+  text-decoration: none;
+}

@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     justifySelf: "flex-start",
     padding: theme.spacing(3, 0),
   },
+
   paper: {
     padding: theme.spacing(3),
     margin: theme.spacing(10, 2),
@@ -44,16 +45,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = () => {
+const SignIn = () => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
-    passwordBis: "",
-    name: "",
-    lastname: "",
   });
 
-  const { email, password, passwordBis, name, lastname } = userData;
+  const { email, password } = userData;
 
   const [flash, setFlash] = useState("");
   const [open, setOpen] = useState(false);
@@ -65,10 +63,12 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("/auth/signup", userData)
+      .post("/auth/signin", userData)
       .then((response) => response.data)
       .then((res) => setFlash(res.flash))
-      .catch((err) => setFlash("This email already exists"));
+      .catch((err) =>
+        setFlash("We could not sign you in, please verify your details")
+      );
     setOpen(true);
   };
 
@@ -93,10 +93,10 @@ const SignUp = () => {
                 <img src='http://images.innoveduc.fr/react_odyssey_homer/wildhomer.png' />
               </Grid>
               <Grid className={classes.grid} item xs={12} sm={6}>
-                <Link to='/signin' className={classes.link}>
-                  Already have an account ? Sign in here !
+                <Link to='/signup' className={classes.link}>
+                  Not registered yet ? Create an account !
                 </Link>
-                <h1>Sign Up!</h1>
+                <h1>Sign In!</h1>
                 <form className={classes.form} onSubmit={handleSubmit}>
                   <TextField
                     required
@@ -109,42 +109,17 @@ const SignUp = () => {
                     onChange={handleChange}
                   />{" "}
                   <TextField
+                    required
                     margin='normal'
                     fullWidth
+                    aria-invalid='false'
                     type='password'
                     name='password'
                     label='Password'
                     value={password}
                     onChange={handleChange}
                   />{" "}
-                  <TextField
-                    margin='normal'
-                    fullWidth
-                    type='password'
-                    name='passwordBis'
-                    label='Password copy'
-                    value={passwordBis}
-                    onChange={handleChange}
-                  />{" "}
-                  <TextField
-                    margin='normal'
-                    fullWidth
-                    type='name'
-                    name='name'
-                    label='Name'
-                    value={name}
-                    onChange={handleChange}
-                  />{" "}
-                  <TextField
-                    margin='normal'
-                    fullWidth
-                    type='lastname'
-                    name='lastname'
-                    value={lastname}
-                    label='Lastname'
-                    onChange={handleChange}
-                  />{" "}
-                  <Link to='/' className={classes.submit}>
+                  <Link to='/profile' className={classes.submit}>
                     <Button type='submit' variant='contained' color='primary'>
                       Submit
                     </Button>
@@ -176,4 +151,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;
