@@ -1,0 +1,19 @@
+{
+  "name": "serveur",
+  "version": "1.0.0",
+  "description": "serveur de la Wild",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "wilder",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-router": "0.0.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.6"
+  }
+}
