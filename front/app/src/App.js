@@ -1,11 +1,15 @@
 import React from "react";
 import SignUp from "./components/SignUp";
-import "./App.css";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
+
+const theme = createMuiTheme();
 
 function App() {
   return (
     <div className='App'>
-      <SignUp />
+      <MuiThemeProvider theme={theme}>
+        <SignUp />
+      </MuiThemeProvider>
     </div>
   );
 }
